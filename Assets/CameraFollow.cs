@@ -1,0 +1,45 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraFollow : MonoBehaviour
+{
+	[Tooltip("The GameObject this camera should follow")]
+	[SerializeField]
+	private GameObject parent;
+
+	[Tooltip("Position offset from parent")]
+	[SerializeField]
+	private Vector3 offset;
+
+	[Tooltip("Position that the camera lerps towards each frame")]
+	private Vector3 targetPosition;
+
+	[Range(0.0F, 1.0F)]
+	[SerializeField]
+	private float lerpSpeed = 0.1f;
+	private float maxDistanceToTarget;
+
+
+	void Start()
+	{
+		maxDistanceToTarget = Vector3.Distance(Vector3.zero, offset);
+		transform.position = parent.transform.position + offset;
+		transform.rotation = parent.transform.rotation;
+	}
+
+	// Update is called once per frame
+	void LateUpdate()
+	{
+
+		targetPosition = parent.transform.position + offset;
+
+		RaycastHit hit;
+		if (Physics.Raycast(parent.transform.position, parent.transform.position + offset - parent.transform.position,out hit, maxDistanceToTarget))
+		{
+			targetPosition = hit.point;
+		}
+
+		transform.position = targetPosition;
+	}
+}
