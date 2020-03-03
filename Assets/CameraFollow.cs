@@ -33,14 +33,14 @@ public class CameraFollow : MonoBehaviour
 	{
 		transform.rotation = Quaternion.LookRotation(parent.transform.position - transform.position, Vector3.up);
 
-		//targetPosition = parent.transform.position + offset;
+		targetPosition = parent.transform.position + (Quaternion.Euler(0.0f, transform.rotation.eulerAngles.y, 0.0f) * offset);
 
-		//RaycastHit hit;
-		//if (Physics.Raycast(parent.transform.position, parent.transform.position + offset - parent.transform.position,out hit, maxDistanceToTarget))
-		//{
-		//	targetPosition = hit.point;
-		//}
+		RaycastHit hit;
+		if (Physics.Raycast(parent.transform.position, targetPosition - parent.transform.position,out hit, maxDistanceToTarget))
+		{
+			targetPosition = hit.point;
+		}
 
-		//transform.position = targetPosition;
+		transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed);
 	}
 }
