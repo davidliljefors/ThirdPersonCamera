@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
+	public Transform camera;
 	public float speed = 6.0F;
 	public float jumpSpeed = 8.0F;
 	public float gravity = 20.0F;
@@ -13,6 +14,7 @@ public class CharacterMovement : MonoBehaviour
 	private void Start()
 	{
 		controller = GetComponent<CharacterController>();
+		camera = Camera.main.transform;
 	}
 	void Update()
 	{
@@ -21,6 +23,9 @@ public class CharacterMovement : MonoBehaviour
 			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 			moveDirection = transform.TransformDirection(moveDirection);
 			moveDirection *= speed;
+			var moveRotation = Quaternion.Euler(0.0f, camera.rotation.eulerAngles.y, 0.0f);
+
+			moveDirection = moveRotation * moveDirection;
 			if (Input.GetButton("Jump"))
 				moveDirection.y = jumpSpeed;
 

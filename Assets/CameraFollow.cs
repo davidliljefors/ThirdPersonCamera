@@ -31,15 +31,16 @@ public class CameraFollow : MonoBehaviour
 	// Update is called once per frame
 	void LateUpdate()
 	{
+		transform.rotation = Quaternion.LookRotation(parent.transform.position - transform.position, Vector3.up);
 
-		targetPosition = parent.transform.position + offset;
+		//targetPosition = parent.transform.position + offset;
 
-		RaycastHit hit;
-		if (Physics.Raycast(parent.transform.position, parent.transform.position + offset - parent.transform.position,out hit, maxDistanceToTarget))
-		{
-			targetPosition = hit.point;
-		}
+		//RaycastHit hit;
+		//if (Physics.Raycast(parent.transform.position, parent.transform.position + offset - parent.transform.position,out hit, maxDistanceToTarget))
+		//{
+		//	targetPosition = hit.point;
+		//}
 
-		transform.position = targetPosition;
+		//transform.position = targetPosition;
 	}
 }
