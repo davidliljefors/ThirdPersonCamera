@@ -20,16 +20,14 @@ public class CharacterMovement : MonoBehaviour
 	{
 		if (controller.isGrounded)
 		{
-			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+			moveDirection = new Vector3(Input.GetAxisRaw("Strafe"), 0, Input.GetAxisRaw("Forward"));
 			moveDirection = transform.TransformDirection(moveDirection);
 			moveDirection *= speed;
-			var moveRotation = Quaternion.Euler(0.0f, camera.rotation.eulerAngles.y, 0.0f);
-
-			moveDirection = moveRotation * moveDirection;
 			if (Input.GetButton("Jump"))
 				moveDirection.y = jumpSpeed;
 
 		}
+		transform.rotation *= Quaternion.Euler(0, Input.GetAxisRaw("Turn"), 0);
 		moveDirection.y -= gravity * Time.deltaTime;
 		controller.Move(moveDirection * Time.deltaTime);
 	}

@@ -259,7 +259,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -375,7 +376,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 73
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -416,12 +417,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4440aba563644c24c81381ee3e97cab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToFollow: {fileID: 1786634415}
+  maxRange: 10
+  MinimumX: -89
+  MaximumX: 89
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2593e576f6a9794c9ccf8ac5f21b168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 1786634415}
-  offset: {x: 0, y: 1, z: -5}
-  lerpSpeed: 0.076
+  offset: {x: 0, y: 0, z: -10}
+  lerpSpeed: 0.1
 --- !u!1 &1403006117
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 266edf6913be7cd4089d44faced5d93a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
+  camera: {fileID: 963194228}
   speed: 6
   jumpSpeed: 13
   gravity: 50
