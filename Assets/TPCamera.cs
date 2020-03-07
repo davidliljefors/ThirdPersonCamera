@@ -147,8 +147,11 @@ public class TPCamera : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-		Gizmos.DrawLine(focus.position, focus.position + offset);
-		Gizmos.DrawWireSphere(focus.position, 0.5F);
+		if (focus != null)
+		{
+			Gizmos.DrawLine(focus.position, focus.position + offset);
+			Gizmos.DrawWireSphere(focus.position, 0.5F);
+		}
 	}
 	IEnumerator EnableCameraFollowRotation()
 	{
