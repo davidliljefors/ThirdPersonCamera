@@ -6,11 +6,11 @@ public class CameraFollow : MonoBehaviour
 {
 	[Tooltip("The GameObject this camera should follow")]
 	[SerializeField]
-	private GameObject parent;
+	private GameObject parent = default;
 
 	[Tooltip("Position offset from parent")]
 	[SerializeField]
-	private Vector3 offset;
+	private Vector3 offset = default;
 
 	[Tooltip("Position that the camera lerps towards each frame")]
 	private Vector3 targetPosition;
