@@ -4,45 +4,33 @@ using UnityEngine;
 public class TPCamera : MonoBehaviour
 {
 	#region Serialized Variables
-	[Tooltip("The GameObject this camera should follow")]
-	[SerializeField]
+
+	[Tooltip("The GameObject this camera should follow")] [SerializeField]
 	private GameObject objectToFollow = default;
 
-	[Range(5f, 100f)]
-	[SerializeField]
-	private float maxRange = 10.0f;
+	[Range(5f, 100f)] [SerializeField] private float maxRange = 10.0f;
 
-	[Range(0.01f, 10f)]
-	[SerializeField]
-	private float minRange = 0.1f;
+	[Range(0.01f, 10f)] [SerializeField] private float minRange = 0.1f;
 
-	[Range(5f, 50f)]
-	[SerializeField]
-	private float lerpSpeed = 10f;
+	[Range(5f, 50f)] [SerializeField] private float lerpSpeed = 10f;
 
-	[Range(0f, -90f)]
-	[SerializeField]
-	private float minX = -90f;
+	[Range(0f, -90f)] [SerializeField] private float minX = -90f;
 
-	[Range(0f, 90f)]
-	[SerializeField]
-	private float maxX = 90f;
+	[Range(0f, 90f)] [SerializeField] private float maxX = 90f;
 
-	[Tooltip("The time until camera resets to behind after user let go of LMB")]
-	[SerializeField]
+	[Tooltip("The time until camera resets to behind after user let go of LMB")] [SerializeField]
 	private float resetTime = 2f;
 
-	[Tooltip("Size of the sphere for collision check with obstacles")]
-	[SerializeField]
+	[Tooltip("Size of the sphere for collision check with obstacles")] [SerializeField]
 	private float sphereSize = 0.25f;
 
-	[SerializeField]
-	private string axisYName = "Mouse Y";
-	[SerializeField]
-	private string axisXName = "Mouse X";
+	[SerializeField] private string axisYName = "Mouse Y";
+	[SerializeField] private string axisXName = "Mouse X";
+
 	#endregion Serialized Variables
 
 	#region Private Variables
+
 	private float currentRange;
 	private Transform focus = default;
 	private Quaternion cameraRot;
@@ -52,6 +40,7 @@ public class TPCamera : MonoBehaviour
 	private bool useTargetRotation = true;
 
 	private Coroutine resetRotationRoutine;
+
 	#endregion Private Variables
 
 	private void Start()
@@ -79,7 +68,8 @@ public class TPCamera : MonoBehaviour
 
 		if (useTargetRotation)
 		{
-			focus.rotation = Quaternion.Lerp(focus.rotation, objectToFollow.transform.rotation, Time.deltaTime * lerpSpeed);
+			focus.rotation = Quaternion.Lerp(focus.rotation, objectToFollow.transform.rotation,
+				Time.deltaTime * lerpSpeed);
 		}
 
 		offset.x = 0;
@@ -93,9 +83,11 @@ public class TPCamera : MonoBehaviour
 		// Cast a sphere towards camera position. If a hit occurs, 
 		// calculate length of that vector in direction of camera and change offset length to that instead
 
-		if (Physics.SphereCast(focus.position, sphereSize, transform.position - focus.position, out RaycastHit hit, currentRange))
+		if (Physics.SphereCast(focus.position, sphereSize, transform.position - focus.position, out RaycastHit hit,
+			currentRange))
 		{
-			float vectorLength = Mathf.Sqrt(Vector3.Dot((hit.point - focus.position), (transform.position - focus.position)));
+			float vectorLength =
+				Mathf.Sqrt(Vector3.Dot((hit.point - focus.position), (transform.position - focus.position)));
 			offset = offset.normalized * vectorLength;
 		}
 
@@ -185,12 +177,11 @@ public class TPCamera : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-		if (focus != null)
-		{
-			Gizmos.DrawLine(focus.position, focus.position + offset);
-			Gizmos.DrawWireSphere(focus.position, 0.5F);
-		}
+		if (focus == null) return;
+		Gizmos.DrawLine(focus.position, focus.position + offset);
+		Gizmos.DrawWireSphere(focus.position, 0.5F);
 	}
+
 	IEnumerator EnableCameraFollowRotation()
 	{
 		yield return new WaitForSeconds(resetTime);
